@@ -10,3 +10,7 @@ function solution(arr)
     
     return answer;
 }
+
+function filterSolution(arr){
+    return arr.filter((value,index)=>value!==arr[index+1]);
+}
