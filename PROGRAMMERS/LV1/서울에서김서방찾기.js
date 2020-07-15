@@ -8,3 +8,8 @@ function solution(seoul) {
     answer='김서방은 '+count +'에 있다';
     return answer;
 }
+
+//better solution with indexOf
+function betterSolution(seoul){
+    return '김서방은 '+seoul.indexOf('Kim')+'에 있다';
+}
