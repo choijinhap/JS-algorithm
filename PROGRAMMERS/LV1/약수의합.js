@@ -7,3 +7,9 @@ function solution(n) {
     }
     return answer;
 }
+
+const state={[0]:{a:'a'},[1]:{b:'b'}}
+console.log([state].map((a,b)=>Object.values(a)))
+console.log(Object.values(state))
+console.log([state[Object.keys(state)]])
+console.log(Object.keys(state))
