@@ -3,9 +3,12 @@ const STRONG_ATTACK_VALUE = 17;
 const MONSTER_ATTACK_VALUE = 14;
 const HEAL_VALUE = 20;
 
+const MODE_ATTACK='ATTACK';//MODE_ATTACK=0
+const MODE_STRONT_ATTACK='STRONG_ATTACK'//MODE_STRONG_ATTACK=1
+
 const enteredValue = prompt('maximum life for you and the monster', '100');
 let chosenMaxLife = parseInt(enteredValue);
-if (isNaN(chosenMaxLife)) {
+if (isNaN(chosenMaxLife) || chosenMaxLife <= 0) {
   chosenMaxLife = 100;
 }
 
@@ -43,9 +46,9 @@ function endRound() {
 }
 function attackMonster(mode) {
   let maxDamage;
-  if (mode === 'ATTACK') {
+  if (mode === MODE_ATTACK) {
     maxDamage = ATTACK_VALUE;
-  } else if (mode === 'STRONG_ATTACK') {
+  } else if (mode === MODE_STRONG_ATTACK) {
     maxDamage = STRONG_ATTACK_VALUE;
   }
   const damage = dealMonsterDamage(maxDamage);
@@ -53,11 +56,11 @@ function attackMonster(mode) {
   endRound();
 }
 function attackHandler() {
-  attackMonster('ATTACK');
+  attackMonster(MODE_ATTACK);
 }
 
 function strongAttackHandler() {
-  attackMonster('STRONG_ATTACK');
+  attackMonster(MODE_STRONG_ATTACK);
 }
 
 function healPlayerHandler() {
