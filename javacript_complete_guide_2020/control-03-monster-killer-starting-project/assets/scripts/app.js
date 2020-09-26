@@ -144,7 +144,7 @@ function writeLogHandler() {
     console.log(`#${i}`);
     for (const key in logEntry) {
       console.log(`${key} => ${logEntry[key]}`);
-      console.log(logEntry.key);
+      console.log(logEntry[key]);
     }
     i++;
   }
