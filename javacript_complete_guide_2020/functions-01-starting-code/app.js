@@ -67,3 +67,13 @@ startGameBtn.addEventListener('click', function () {
   alert(message);
   isGameRunning = false;
 });
+
+//not related to game
+const sumUp =  (...numbers)=>{
+    let sum=0;
+    for(const num in numbers){
+        sum+=num;
+    }
+    return sum;
+}
+console.log(sumUp(1,2,3,4));
