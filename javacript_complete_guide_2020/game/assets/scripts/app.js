@@ -4,7 +4,7 @@ const nowDate = new Date();
 let recentDrwn = parseInt((nowDate - startDate) / WEEK_MS) + 1;
 const URL =
   'https://dhlottery.co.kr/common.do?method=getLottoNumber&drwNo=' + recentDrwn;
-
+   
 function getLastNums() {
   const lastNums = [];
   let xmlHttp = new XMLHttpRequest();
