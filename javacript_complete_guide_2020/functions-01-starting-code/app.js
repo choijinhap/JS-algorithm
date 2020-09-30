@@ -77,10 +77,23 @@ const sumUp =  (resultHandler,...numbers)=>{
     for(const num of numbers){
         sum+=validateNumber(num);
     }
-    resultHandler(sum);
+    resultHandler(sum,'The result after adding all number is');
 }
 
-const showResult =(num) =>{
-    alert(num);
+const substractUp =  (resultHandler,...numbers)=>{
+    const validateNumber=(number)=>{
+        return isNaN(number)?0:number;
+    }
+    let sum=0;
+    for(const num of numbers){
+        sum-=validateNumber(num);
+    }
+    resultHandler(sum,'The reuslt after substracting all number is');
+}
+
+const showResult =(result,message) =>{
+    alert(message+' '+result);
 }
 sumUp(showResult,1,2,'as',4);
+substractUp(showResult,1,2,'as',4);
+
