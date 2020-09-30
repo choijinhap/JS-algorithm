@@ -4,8 +4,13 @@ const ROCK = 'ROCK';
 const PAPER = 'PAPER';
 const SCISSORS = 'SCISSORS';
 const DEFAULT_USER_SELECTION = ROCK;
+
+const DRAW = 'DRAW';
+const PLAYER_WIN = 'PLAYER_WIN';
+const COMPUTER_WIN = 'COMPUTER_WIN';
 let isGameRunning = false;
-function getPlayerChoice() {
+
+const getPlayerChoice = function () {
   const selection = prompt(
     `select ${ROCK} ${PAPER} or ${SCISSORS}`
   ).toUpperCase();
@@ -14,7 +19,32 @@ function getPlayerChoice() {
     return DEFAULT_USER_SELECTION;
   }
   return selection;
-}
+};
+
+const getComputerChoice = function () {
+  const randomValue = Math.random();
+  if (randomValue < 0.34) {
+    return ROCK;
+  } else if (randomValue < 0.67) {
+    return PAPER;
+  } else {
+    return SCISSORS;
+  }
+};
+
+const getWinner = function (cChoice, pChoice) {
+  if (cChoice === pChoice) {
+    return DRAW;
+  } else if (
+    (cChoice === ROCK && pChoice === PAPER) ||
+    (cChoice === PAPER && pChoice === SCISSORS) ||
+    (cChoice === SCISSORS && pChoice === ROCK)
+  ) {
+    return PLAYER_WIN;
+  } else {
+    return COMPUTER_WIN;
+  }
+};
 
 startGameBtn.addEventListener('click', function () {
   if (isGameRunning) {
@@ -22,6 +52,10 @@ startGameBtn.addEventListener('click', function () {
   }
   isGameRunning = true;
   console.log('Gamie is  starting...');
-  const playerSelection = getPlayerChoice();
-  console.log(playerSelection);
+  const playerChoice = getPlayerChoice();
+  const computerChoice = getComputerChoice();
+  const winner = getWinner(computerChoice, playerChoice);
+  console.log(playerChoice);
+  console.log(computerChoice);
+  console.log(winner);
 });
