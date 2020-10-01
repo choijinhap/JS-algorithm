@@ -28,3 +28,10 @@ const button=document.querySelector('button');
 button.addEventListener('click',()=>{
     section.classList.toggle('invisible');
 })
+
+const list =document.querySelector('ul');
+const newLi=document.createElement('li');
+newLi.textContent='Item4';
+list.lastElementChild.before(newLi);
+const newLi2=newLi.cloneNode(true);
+list.appendChild(newLi2);
