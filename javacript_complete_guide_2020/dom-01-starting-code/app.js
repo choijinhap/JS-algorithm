@@ -35,3 +35,10 @@ newLi.textContent='Item4';
 list.lastElementChild.before(newLi);
 const newLi2=newLi.cloneNode(true);
 list.appendChild(newLi2);
+
+
+
+//ie지원 안함
+list.remove()
+//same result  , ie support
+list.parentElement.removeChild(list);
