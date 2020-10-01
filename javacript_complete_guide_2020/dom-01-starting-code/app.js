@@ -19,3 +19,12 @@ ul.querySelector('li:first-of-type');
 
 
 console.log(ul.parentElement);
+
+const section = document.querySelector('section');
+//section.style.backgroundColor='blue';
+//section.className='invisible';
+
+const button=document.querySelector('button');
+button.addEventListener('click',()=>{
+    section.classList.toggle('invisible');
+})
