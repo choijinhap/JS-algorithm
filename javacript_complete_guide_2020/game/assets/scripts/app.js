@@ -1,7 +1,7 @@
 const WEEK_MS = 1000 * 60 * 60 * 24 * 7;
 const startDate = new Date('2002-12-07 00:00:00');
 const nowDate = new Date();
-let recentDrwn = parseInt((nowDate - startDate) / WEEK_MS) + 1;
+let recentDrwn = parseInt((nowDate - startDate) / WEEK_MS) ;
 const URL =
   'https://dhlottery.co.kr/common.do?method=getLottoNumber&drwNo=' + recentDrwn;
    
@@ -33,7 +33,7 @@ function getRecmNums() {
   }
 
   let num;
-  for (let i = 0; i < 7; i++) {
+  for (let i = 0; i < 6; i++) {
     num = Math.floor(Math.random() * posNums.length);
     recmNums.push(posNums[num]);
     const idx = posNums.indexOf(posNums[num]);
