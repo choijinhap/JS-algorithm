@@ -26,7 +26,11 @@ const updateUi = () => {
   }
 };
 
-const deleteMovieHandler = (movieId) => {
+const closeDeleteMovieModal = () => {
+  const deleteModal = document.getElementById('delete-modal');
+  deleteModal.classList.remove('visible');
+};
+const deleteMovie = (movieId) => {
   let movieIndex = 0;
   for (const movie of movies) {
     if (movie.id === movieId) {
@@ -38,6 +42,13 @@ const deleteMovieHandler = (movieId) => {
   const movieList = document.getElementById('movie-list');
   //movieList.children[movieIndex].remove();
   movieList.removeChild(movieList.children[movieIndex]);
+};
+
+const deleteMovieHandler = (movieId) => {
+  const deleteModal = document.getElementById('delete-modal');
+  deleteModal.classList.add('visible');
+  toggleBackdrop();
+  //   deleteMovie(movieId);
 };
 
 const renderNewMovieElement = (id, title, imageUrl, rating) => {
@@ -61,8 +72,11 @@ const toggleBackdrop = () => {
   backdrop.classList.toggle('visible');
 };
 
-const toggleMovieModal = () => {
-  addMovieModal.classList.toggle('visible');
+const closeMovieModal = () => {
+  addMovieModal.classList.remove('visible');
+};
+const showMovieModal = () => {
+  addMovieModal.classList.add('visible');
   toggleBackdrop();
 };
 
@@ -74,7 +88,8 @@ const clearMovieInput = () => {
 
 const cancelAddMovieHandler = () => {
   clearMovieInput();
-  toggleMovieModal();
+  closeMovieModal();
+  toggleBackdrop();
 };
 
 const addMovieHandler = () => {
@@ -109,14 +124,17 @@ const addMovieHandler = () => {
     newMovie.rating
   );
   clearMovieInput();
-  toggleMovieModal();
+  closeMovieModal();
+  toggleBackdrop();
 };
 
 const backdropClickHandler = () => {
-  toggleMovieModal();
+  closeMovieModal();
+  closeDeleteMovieModal();
+  toggleBackdrop();
 };
 
-startAddMovieButton.addEventListener('click', toggleMovieModal);
+startAddMovieButton.addEventListener('click', showMovieModal);
 backdrop.addEventListener('click', backdropClickHandler);
 cancelAddMovieButton.addEventListener('click', cancelAddMovieHandler);
 confirmAddMovieButton.addEventListener('click', addMovieHandler);
