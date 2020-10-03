@@ -12,3 +12,12 @@ console.log(listItems);
 
 const arrayListItems = Array.from(listItems);
 console.log(arrayListItems);
+
+const hobbies = ['Sports', 'Cooking'];
+hobbies.push('Reading');
+hobbies.unshift('Coding');
+const poppedValue = hobbies.pop();
+const droppedvalue = hobbies.shift();
+console.log(hobbies);
+console.log(poppedValue);
+console.log(droppedvalue);
