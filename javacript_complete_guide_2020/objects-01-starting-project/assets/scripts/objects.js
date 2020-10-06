@@ -24,8 +24,8 @@ const renderMovies = (filter = '') => {
     //const { title:movieTitle } = info;
     //const movieTitle=movie.getFormattedTitle();
     let { getFormattedTitle } = movie;
-    getFormattedTitle = getFormattedTitle.bind(movie);
-    let text = getFormattedTitle() + ' - ';
+    // getFormattedTitle = getFormattedTitle.bind(movie);
+    let text = getFormattedTitle.call(movie) + ' - ';
     for (const key in info) {
       if (key !== 'title') {
         text += `${key} : ${info[key]}`;
