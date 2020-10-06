@@ -17,6 +17,10 @@ class ProductItem {
     this.product = product;
   }
 
+  addToCart() {
+    console.log('adding cart');
+    console.log(this.product);
+  }
   render() {
     const prodEl = document.createElement('li');
     prodEl.className = 'product-item';
@@ -31,12 +35,16 @@ class ProductItem {
                       </div>
                   </div>
               `;
+    const addToCartBtn = prodEl.querySelector('button');
+    //이벤트리스너에 등록하는 함수는 이벤트리스너가 달린 엘리먼트가 호출하기에 this가 addToCardBtn이 된다.
+    // 그렇기에 등록하는 시점에 bind(this)를 통해 ProductItem으로 this를 바인딩해야한다.
+    addToCartBtn.addEventListener('click', this.addToCart.bind(this));
     return prodEl;
   }
 }
 
-const productList = {
-  products: [
+class ProductList {
+  products = [
     new Product(
       'Pillow',
       'https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcStvd1ZpnfLaj6rvXG7ujs3cl61uq5OktMG2Ynr8pVc4zalb-y9-ATrLvBXrP233g&usqp=CAc',
@@ -49,7 +57,8 @@ const productList = {
       89.99,
       'Good Carpet'
     ),
-  ],
+  ];
+
   render() {
     const renderHook = document.getElementById('app');
     const prodList = document.createElement('ul');
@@ -60,6 +69,7 @@ const productList = {
       prodList.append(prodEl);
     }
     renderHook.append(prodList);
-  },
-};
+  }
+}
+const productList = new ProductList();
 productList.render();
