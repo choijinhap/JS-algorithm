@@ -64,6 +64,7 @@ const addMovieHandler = () => {
 };
 
 const searchMovieHandler = () => {
+    console.log(this)
   const filter = document.getElementById('filter-title').value;
   renderMovies(filter);
 };
