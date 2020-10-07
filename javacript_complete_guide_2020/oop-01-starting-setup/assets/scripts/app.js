@@ -4,7 +4,7 @@ class Product {
   //   description;
   //   price;
 
-  constructor(title, imgUrl, description, price) {
+  constructor(title, imgUrl, price, description) {
     this.title = title;
     this.imgUrl = imgUrl;
     this.description = description;
@@ -75,9 +75,20 @@ class ProductList {
 class ShoppingCart {
   items = [];
 
+  set cartItems(value) {
+    this.items = value;
+    this.totalOutput.innerHTML = `<h2>Total: ${this.totalAmount.toFixed(2)}</h2>`;
+  }
+  get totalAmount() {
+    return this.items.reduce(
+      (prevValue, curItem) => prevValue + curItem.price,
+      0
+    );
+  }
   addProduct(product) {
-    this.items.push(product);
-    this.totalOutput.innerHTML = `<h2>Total: ${1}</h2>`;
+    const updatedItems = [...this.items];
+    updatedItems.push(product);
+    this.cartItems = updatedItems;
   }
   render() {
     const cartEl = document.createElement('section');
@@ -92,7 +103,7 @@ class ShoppingCart {
 }
 class Shop {
   cart;
-  
+
   render() {
     const renderHook = document.getElementById('app');
     const productList = new ProductList();
@@ -114,7 +125,7 @@ class App {
   }
 
   static addToCart(product) {
-    this.cart.addProduct();
+    this.cart.addProduct(product);
   }
 }
 App.init();
