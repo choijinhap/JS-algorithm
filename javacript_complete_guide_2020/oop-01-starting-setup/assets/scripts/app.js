@@ -111,7 +111,9 @@ class ShoppingCart extends Component {
   items = [];
 
   constructor(renderHook) {
-    super(renderHook);
+    super(renderHook, false);
+    this.orderHandler.bind(this);
+    this.render();
   }
   set cartItems(value) {
     this.items = value;
@@ -130,12 +132,29 @@ class ShoppingCart extends Component {
     updatedItems.push(product);
     this.cartItems = updatedItems;
   }
+  // orderHandler() {
+  //   console.log('Ordering...');
+  //   console.log(this.items);
+  // }
+  orderHandler = () => {
+    console.log('Ordering...');
+    console.log(this.items);
+  };
   render() {
     const cartEl = this.createRootElement('section', 'cart');
     cartEl.innerHTML = `
             <h2>Total: ${0}</h2>
             <button> Order now!</button>
         `;
+    const orderBtn = cartEl.querySelector('button');
+    //this를 바인딩하는 여러가지 방법
+    //1.bind함수를 통해 함수를 실행하는 orderBtn이 아닌 이 클래스(this)를 바인딩한다.
+    //orderBtn.addEventListener('click', this.orderHandler.bind(this));
+    //2.anonymous function을 호출하게한다. 현재 컨텍스트의 this를 갖게한다.
+    //orderBtn.addEventListener('click', ()=>this.orderHandler());
+    //3.arrow function을 등록한다. 단 렌더링 하는 시점을 유의하여하 한다. super()를 통해 렌더링을 하면 subclass의 property를 참조할수 없다.
+    orderBtn.addEventListener('click', this.orderHandler);
+
     this.totalOutput = cartEl.querySelector('h2');
   }
 }
