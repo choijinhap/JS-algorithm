@@ -19,8 +19,11 @@ class ElementAttribute {
   }
 }
 class Component {
-  constructor(renderHookId) {
+  constructor(renderHookId, shouldRender = true) {
     this.hookId = renderHookId;
+    if (shouldRender) {
+      this.render();
+    }
   }
 
   createRootElement(tag, cssClasses, attributes) {
@@ -40,8 +43,9 @@ class Component {
 
 class ProductItem extends Component {
   constructor(product, renderHookId) {
-    super(renderHookId);
+    super(renderHookId, false);
     this.product = product;
+    this.render();
   }
 
   addToCart() {
@@ -66,35 +70,39 @@ class ProductItem extends Component {
     //이벤트리스너에 등록하는 함수는 이벤트리스너가 달린 엘리먼트가 호출하기에 this가 addToCardBtn이 된다.
     // 그렇기에 등록하는 시점에 bind(this)를 통해 ProductItem으로 this를 바인딩해야한다.
     addToCartBtn.addEventListener('click', this.addToCart.bind(this));
-    return prodEl;
   }
 }
 
 class ProductList extends Component {
-  products = [
-    new Product(
-      'Pillow',
-      'https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcStvd1ZpnfLaj6rvXG7ujs3cl61uq5OktMG2Ynr8pVc4zalb-y9-ATrLvBXrP233g&usqp=CAc',
-      19.9,
-      'soft pillow'
-    ),
-    new Product(
-      'Carpet',
-      'https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcSbmOOcHqrHZTu8ZkMR3mPdN3igX3lPwcD-DKzOJzlhsN5u9xuxXh2HCCzC1iZW1nc_R_Hw58rFK4GmODiHvrNGdWMc91_kiJ3LRF0K-v29&usqp=CAc',
-      89.99,
-      'Good Carpet'
-    ),
-  ];
   constructor(renderHookId) {
-    super(renderHookId);
+    super(renderHookId, false);
+    this.fetchProducts();
+    this.render();
   }
+
+  fetchProducts() {
+    this.products = [
+      new Product(
+        'Pillow',
+        'https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcStvd1ZpnfLaj6rvXG7ujs3cl61uq5OktMG2Ynr8pVc4zalb-y9-ATrLvBXrP233g&usqp=CAc',
+        19.9,
+        'soft pillow'
+      ),
+      new Product(
+        'Carpet',
+        'https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcSbmOOcHqrHZTu8ZkMR3mPdN3igX3lPwcD-DKzOJzlhsN5u9xuxXh2HCCzC1iZW1nc_R_Hw58rFK4GmODiHvrNGdWMc91_kiJ3LRF0K-v29&usqp=CAc',
+        89.99,
+        'Good Carpet'
+      ),
+    ];
+  }
+
   render() {
     this.createRootElement('ul', 'product-list', [
       new ElementAttribute('id', 'prod-list'),
     ]);
     for (const prod of this.products) {
-      const prodItem = new ProductItem(prod, 'prod-list');
-      prodItem.render();
+      new ProductItem(prod, 'prod-list');
     }
   }
 }
@@ -131,14 +139,15 @@ class ShoppingCart extends Component {
     this.totalOutput = cartEl.querySelector('h2');
   }
 }
-class Shop {
+class Shop extends Component {
   cart;
-
+  constructor() {
+    super('', false);
+    this.render();
+  }
   render() {
     this.cart = new ShoppingCart('app');
-    this.cart.render();
-    const productList = new ProductList('app');
-    productList.render();
+    new ProductList('app');
   }
 }
 
@@ -147,7 +156,6 @@ class App {
 
   static init() {
     const shop = new Shop();
-    shop.render();
     this.cart = shop.cart;
   }
 
