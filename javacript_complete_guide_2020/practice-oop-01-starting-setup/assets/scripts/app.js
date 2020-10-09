@@ -1,9 +1,9 @@
 class DomHelper {
-    static clearEventListeners(element){
-        const clonedEl=element.cloneNode(true)
-        element.replaceWith(clonedEl);
-        return clonedEl;
-    }
+  static clearEventListeners(element) {
+    const clonedEl = element.cloneNode(true);
+    element.replaceWith(clonedEl);
+    return clonedEl;
+  }
   static moveElement(elemnetId, newDestSelector) {
     const element = document.getElementById(elemnetId);
     const destEl = document.querySelector(newDestSelector);
@@ -11,8 +11,27 @@ class DomHelper {
   }
 }
 
-class Tolltip {}
+class Tooltip {
+  constructor(closeTooltipFunction) {
+    this.close = closeTooltipFunction;
+  }
+  detach = () => {
+    this.close();
+    this.element.remove();
+    //위와 같은 코드 (옛날 브라우저와 호환이 더 잘됨)
+    //this.element.parentElement.removeChild(this.element);
+  };
+  attach() {
+    const tooltipEl = document.createElement('div');
+    tooltipEl.className = 'card';
+    tooltipEl.addEventListener('click', this.detach);
+    tooltipEl.textContent = 'Dummy info';
+    this.element = tooltipEl;
+    document.body.append(tooltipEl);
+  }
+}
 class ProjectItem {
+  hasActiveTooltip = false;
   constructor(id, type, updateProjectList) {
     this.id = id;
     this.type = type;
@@ -20,12 +39,25 @@ class ProjectItem {
     this.connectMoreInfoBtn();
     this.connectSwitchBtn();
   }
-  connectMoreInfoBtn() {}
+  showMoreInfoHandler() {
+    if (this.hasActiveTooltip) return;
+    const tooltip = new Tooltip(() => {
+      this.hasActiveTooltip = false;
+    });
+    tooltip.attach();
+    this.hasActiveTooltip = true;
+  }
+  connectMoreInfoBtn() {
+    const prjItemEl = document.getElementById(this.id);
+    const moreInfoBtn = prjItemEl.querySelector('button:first-of-type');
+    moreInfoBtn.addEventListener('click', this.showMoreInfoHandler);
+  }
+
   connectSwitchBtn() {
     const prjItemEl = document.getElementById(this.id);
     let switchBtn = prjItemEl.querySelector('button:last-of-type');
-    switchBtn =DomHelper.clearEventListeners(switchBtn)
-    switchBtn.textContent=this.type==='active'?'Activate':'Finish'
+    switchBtn = DomHelper.clearEventListeners(switchBtn);
+    switchBtn.textContent = this.type === 'active' ? 'Activate' : 'Finish';
     //ProjectList에서 동작하는 함수가 등록되어야함
     switchBtn.addEventListener(
       'click',
@@ -33,11 +65,11 @@ class ProjectItem {
     );
   }
   //have to clear old EventListener
-  update(updateProjectList,type){
-    this.type=type;
+  update(updateProjectList, type) {
+    this.type = type;
     this.updateProjectListHandler = updateProjectList;
     this.connectSwitchBtn();
-    }
+  }
 }
 class ProjectList {
   projects = [];
@@ -57,7 +89,7 @@ class ProjectList {
   addProject(project) {
     this.projects.push(project);
     DomHelper.moveElement(project.id, `#${this.type}-projects ul`);
-    project.update(this.switchProject.bind(this),this.type);
+    project.update(this.switchProject.bind(this), this.type);
   }
   switchProject(projectId) {
     // const prjIndex=this.projects.findIndex(p=>p.id===projectId);
