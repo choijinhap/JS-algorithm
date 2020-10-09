@@ -1,3 +1,11 @@
+class DomHelper {
+  static moveElement(elemnetId, newDestSelector) {
+    const element = document.getElementById(elemnetId);
+    const destEl = document.querySelector(newDestSelector);
+    destEl.append(element);
+  }
+}
+
 class Tolltip {}
 class ProjectItem {
   constructor(id, type, updateProjectList) {
@@ -12,7 +20,10 @@ class ProjectItem {
     const prjItemEl = document.getElementById(this.id);
     const switchBtn = prjItemEl.querySelector('button:last-of-type');
     //ProjectList에서 동작하는 함수가 등록되어야함
-    switchBtn.addEventListener('click', this.updateProjectListHandler);
+    switchBtn.addEventListener(
+      'click',
+      this.updateProjectListHandler.bind(null, this.id)
+    );
   }
 }
 class ProjectList {
@@ -30,15 +41,16 @@ class ProjectList {
   setSwitchHanderlFunction(switchHandlerFunction) {
     this.switchHander = switchHandlerFunction;
   }
-  addProject() {
-    console.log(this);
+  addProject(project) {
+    this.projects.push(project);
+    DomHelper.moveElement(project.id, `#${this.type}-projects ul`);
   }
   switchProject(projectId) {
     // const prjIndex=this.projects.findIndex(p=>p.id===projectId);
     // this.projects.splice(prjIndex,1);
     //위코드와 동일함
-    this.projects = this.projects.filter((p) => p.id !== projectId);
     this.switchHander(this.projects.find((p) => p.id === projectId));
+    this.projects = this.projects.filter((p) => p.id !== projectId);
   }
 }
 
