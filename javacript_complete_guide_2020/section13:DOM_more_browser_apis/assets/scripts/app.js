@@ -40,8 +40,8 @@ class Component {
 class Tooltip extends Component {
   constructor(closeNotifierFunction, text) {
     super();
-    this.text = text;
     this.closeNotifier = closeNotifierFunction;
+    this.text = text;
     this.create();
   }
 
@@ -74,7 +74,6 @@ class ProjectItem {
       return;
     }
     const projectElement = document.getElementById(this.id);
-    //projectElement.dataset.someData='asd'
     const tooltipText = projectElement.dataset.extraInfo;
     const tooltip = new Tooltip(() => {
       this.hasActiveTooltip = false;
@@ -135,8 +134,8 @@ class ProjectList {
   switchProject(projectId) {
     // const projectIndex = this.projects.findIndex(p => p.id === projectId);
     // this.projects.splice(projectIndex, 1);
-    this.switchHandler(this.projects.find((p) => p.id === projectId));
-    this.projects = this.projects.filter((p) => p.id !== projectId);
+    this.switchHandler(this.projects.find(p => p.id === projectId));
+    this.projects = this.projects.filter(p => p.id !== projectId);
   }
 }
 
