@@ -169,8 +169,22 @@ class App {
       activeProjectsList.addProject.bind(activeProjectsList)
     );
 
+    const timeoutId = setTimeout(() => {
+      this.time();
+    }, 2000);
+    const intervalId = setInterval(() => {
+      console.log('asdf');
+    }, 1000);
+
+    document.getElementById('timer').addEventListener('click', () => {
+      clearTimeout(timeoutId);
+      clearInterval(intervalId);
+    });
+  }
+
+  static time() {
     const someScript = document.createElement('script');
-    someScript.textContent = 'alert("hi there")';
+    someScript.textContent = 'console.log("timing...")';
     document.head.append(someScript);
   }
 }
