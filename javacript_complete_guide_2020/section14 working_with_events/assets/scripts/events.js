@@ -19,9 +19,9 @@ setTimeout(() => {
   btn.removeEventListener('click', boundFn);
 }, 2000);
 
-window.addEventListener('scroll', (event) => {
-  console.log(event);
-});
+// window.addEventListener('scroll', (event) => {
+//   console.log(event);
+// });
 
 const form = document.querySelector('form');
 
@@ -36,12 +36,33 @@ div1.addEventListener('click', (event) => {
   console.log('DIV1 CLICKED');
 });
 
-btn.addEventListener('click', (event) => {
+btn.addEventListener(
+  'click',
+  (event) => {
     event.stopPropagation();
 
-  console.log('BTN CLICKED');},true);
+    console.log('BTN CLICKED');
+  },
+  true
+);
 
-const div2=div1.querySelector('#div2')
-div2.addEventListener('click',event=>{
-    console.log('DIV2 CLICKED')
-})
+const div2 = div1.querySelector('#div2');
+div2.addEventListener('click', (event) => {
+  console.log('DIV2 CLICKED');
+});
+
+//bad performance and memory because got a lot of event listeners
+
+// const listItems = document.querySelectorAll('li');
+// listItems.forEach((listItem) => {
+//   listItem.addEventListener('click', (event) => {
+//     event.target.classList.toggle('highlight');
+//   });
+// });
+
+//using delegation pattern
+const list = document.querySelector('ul');
+list.addEventListener('click', (event) => {
+  console.log(event.target);
+  event.target.closest('li').classList.toggle('highlight');
+});
