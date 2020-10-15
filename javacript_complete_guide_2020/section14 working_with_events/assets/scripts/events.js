@@ -30,3 +30,18 @@ form.addEventListener('submit', (event) => {
   event.preventDefault();
   console.log(event.target);
 });
+
+const div1 = document.getElementById('div1');
+div1.addEventListener('click', (event) => {
+  console.log('DIV1 CLICKED');
+});
+
+btn.addEventListener('click', (event) => {
+    event.stopPropagation();
+
+  console.log('BTN CLICKED');},true);
+
+const div2=div1.querySelector('#div2')
+div2.addEventListener('click',event=>{
+    console.log('DIV2 CLICKED')
+})
