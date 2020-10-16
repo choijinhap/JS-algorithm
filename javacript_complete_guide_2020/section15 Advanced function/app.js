@@ -26,3 +26,16 @@ function printHobbies(h) {
   console.log(h);
 }
 printHobbies(hobbies);
+
+//factory function that can call multiple times in different parts of a function
+function createTaxCalculator(tax) {
+  function calculateTax(amount) {
+    return amount * tax;
+  }
+  return calculateTax;
+}
+
+const calculateVatAmount = createTaxCalculator(0.19);
+const calculateInocmeAmount = createTaxCalculator(0.25);
+console.log(calculateVatAmount(100));
+console.log(calculateInocmeAmount(200));
