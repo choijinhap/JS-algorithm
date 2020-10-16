@@ -155,7 +155,7 @@ class ProjectList {
 
     list.addEventListener('dragenter', (event) => {
       if (event.dataTransfer.types[0] === 'text/plain') {
-        list.parentElement.classList.add('droppable')
+        list.parentElement.classList.add('droppable');
         event.preventDefault();
       }
     });
@@ -168,6 +168,17 @@ class ProjectList {
       if (event.relatedTarget.closest(`#${this.type}-projects ul`) !== list) {
         list.parentElement.classList.remove('droppable');
       }
+    });
+    list.addEventListener('drop', (event) => {
+      const prjId = event.dataTransfer.getData('text/plain');
+      if (this.projects.find((p) => p.id === prjId)) {
+        return;
+      }
+      document
+        .getElementById(prjId)
+        .querySelector('button:last-of-type')
+        .click();
+      list.parentElement.classList.remove('droppable');
     });
   }
 
