@@ -39,3 +39,12 @@ const calculateVatAmount = createTaxCalculator(0.19);
 const calculateInocmeAmount = createTaxCalculator(0.25);
 console.log(calculateVatAmount(100));
 console.log(calculateInocmeAmount(200));
+
+//Closure
+let userName = 'Max';
+function greetUser() {
+  let name = userName;
+  console.log(name);
+}
+userName = 'John';
+greetUser();
