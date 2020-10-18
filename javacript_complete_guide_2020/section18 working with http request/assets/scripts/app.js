@@ -24,7 +24,8 @@ function sendHttpRequest(method, url, data) {
   // return promise;
   return fetch(url, {
     method,
-    body: JSON.stringify(data),
+    //body: JSON.stringify(data),
+    body:data,
     headers: { 'Contetent-Type': 'application/json' },
   })
     .then((response) => {
@@ -80,7 +81,9 @@ function createPost(title, content) {
     body: content,
     userId,
   };
-  sendHttpRequest('POST', 'https://jsonplaceholder.typicode.com/posts', post);
+  const fd =new FormData(form);
+  fd.append('userId',userId);
+  sendHttpRequest('POST', 'https://jsonplaceholder.typicode.com/posts', fd);
 }
 
 fetchBtn.addEventListener('click', fetchPosts);
