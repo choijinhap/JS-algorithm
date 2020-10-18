@@ -1,5 +1,8 @@
 const listEl = document.querySelector('.posts');
 const postTemplate = document.getElementById('single-post');
+const form = document.querySelector('#new-post form');
+const fetchBtn = document.querySelector('#available-posts button');
+
 function sendHttpRequest(method, url, data) {
   const promise = new Promise((resolve, reject) => {
     const xhr = new XMLHttpRequest();
@@ -52,5 +55,12 @@ function createPost(title, content) {
   };
   sendHttpRequest('POST', 'https://jsonplaceholder.typicode.com/posts', post);
 }
-fetchPosts();
-createPost('DUMMY', 'A dummy post!');
+
+fetchBtn.addEventListener('click', fetchPosts);
+form.addEventListener('submit', (event) => {
+  event.preventDefault();
+  //validating input is
+  const inputTitle = event.currentTarget.querySelector('#title').value;
+  const inputContent = event.currentTarget.querySelector('#content').value;
+  createPost(inputTitle, inputContent);
+});
