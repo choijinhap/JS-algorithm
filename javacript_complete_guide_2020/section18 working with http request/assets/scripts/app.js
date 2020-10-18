@@ -7,6 +7,7 @@ function sendHttpRequest(method, url, data) {
   // const promise = new Promise((resolve, reject) => {
   //   const xhr = new XMLHttpRequest();
   //   xhr.open(method, url);
+  //   xhr.setRequestHeader('Content-Type','application/json');
   //   xhr.responseType = 'json';
   //   xhr.onload = function () {
   //     if (xhr.status >= 200 && xhr.status < 300) {
@@ -21,7 +22,11 @@ function sendHttpRequest(method, url, data) {
   //   xhr.send(JSON.stringify(data));
   // });
   // return promise;
-  return fetch(url).then(response=>{
+  return fetch(url, {
+    method,
+    body: JSON.stringify(data),
+    headers: { 'Contetent-Type': 'application/json' },
+  }).then((response) => {
     return response.json();
   });
 }
@@ -43,7 +48,6 @@ function sendHttpRequest(method, url, data) {
 // }
 
 function fetchPosts() {
-  
   sendHttpRequest('GET', 'https://jsonplaceholder.typicode.com/posts')
     .then((responseData) => {
       const listOfPosts = responseData;
