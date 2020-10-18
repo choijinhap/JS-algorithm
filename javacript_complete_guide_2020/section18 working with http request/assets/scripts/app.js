@@ -4,16 +4,26 @@ const form = document.querySelector('#new-post form');
 const fetchBtn = document.querySelector('#available-posts button');
 
 function sendHttpRequest(method, url, data) {
-  const promise = new Promise((resolve, reject) => {
-    const xhr = new XMLHttpRequest();
-    xhr.open(method, url);
-    xhr.responseType = 'json';
-    xhr.onload = function () {
-      resolve(xhr.response);
-    };
-    xhr.send(JSON.stringify(data));
+  // const promise = new Promise((resolve, reject) => {
+  //   const xhr = new XMLHttpRequest();
+  //   xhr.open(method, url);
+  //   xhr.responseType = 'json';
+  //   xhr.onload = function () {
+  //     if (xhr.status >= 200 && xhr.status < 300) {
+  //       resolve(xhr.response);
+  //     } else {
+  //       reject('Something went wrong!');
+  //     }
+  //   };
+  //   xhr.onerror = function () {
+  //     reject('network failed');
+  //   };
+  //   xhr.send(JSON.stringify(data));
+  // });
+  // return promise;
+  return fetch(url).then(response=>{
+    return response.json();
   });
-  return promise;
 }
 
 // using async/await
@@ -33,8 +43,9 @@ function sendHttpRequest(method, url, data) {
 // }
 
 function fetchPosts() {
-  sendHttpRequest('GET', 'https://jsonplaceholder.typicode.com/posts').then(
-    (responseData) => {
+  
+  sendHttpRequest('GET', 'https://jsonplaceholder.typicode.com/posts')
+    .then((responseData) => {
       const listOfPosts = responseData;
       listEl.innerHTML = '';
       for (const post of listOfPosts) {
@@ -44,8 +55,10 @@ function fetchPosts() {
         postEl.querySelector('li').id = post.id;
         listEl.append(postEl);
       }
-    }
-  );
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 }
 
 function createPost(title, content) {
