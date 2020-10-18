@@ -8,7 +8,7 @@ function sendHttpRequest(method, url, data) {
     xhr.onload = function () {
       resolve(xhr.response);
     };
-    xhr.send();
+    xhr.send(JSON.stringify(data));
   });
   return promise;
 }
@@ -42,4 +42,15 @@ function fetchPosts() {
     }
   );
 }
+
+function createPost(title, content) {
+  const userId = Math.random();
+  const post = {
+    title,
+    body: content,
+    userId,
+  };
+  sendHttpRequest('POST', 'https://jsonplaceholder.typicode.com/posts', post);
+}
 fetchPosts();
+createPost('DUMMY', 'A dummy post!');
