@@ -36,10 +36,12 @@ function fetchPosts() {
   sendHttpRequest('GET', 'https://jsonplaceholder.typicode.com/posts').then(
     (responseData) => {
       const listOfPosts = responseData;
+      listEl.innerHTML = '';
       for (const post of listOfPosts) {
         const postEl = document.importNode(postTemplate.content, true);
         postEl.querySelector('h2').textContent = post.title.toUpperCase();
         postEl.querySelector('p').textContent = post.body;
+        postEl.querySelector('li').id = post.id;
         listEl.append(postEl);
       }
     }
@@ -63,4 +65,14 @@ form.addEventListener('submit', (event) => {
   const inputTitle = event.currentTarget.querySelector('#title').value;
   const inputContent = event.currentTarget.querySelector('#content').value;
   createPost(inputTitle, inputContent);
+});
+
+listEl.addEventListener('click', (event) => {
+  if (event.target.tagName === 'BUTTON') {
+    const postId = event.target.closest('li').id;
+    sendHttpRequest(
+      'DELETE',
+      `https://jsonplaceholder.typicode.com/posts/${postId}`
+    );
+  }
 });
