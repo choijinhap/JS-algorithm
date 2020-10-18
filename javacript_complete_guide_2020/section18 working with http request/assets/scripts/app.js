@@ -26,9 +26,17 @@ function sendHttpRequest(method, url, data) {
     method,
     body: JSON.stringify(data),
     headers: { 'Contetent-Type': 'application/json' },
-  }).then((response) => {
-    return response.json();
-  });
+  })
+    .then((response) => {
+      if (response.status >= 200 && response.status < 300) {
+        return response.json();
+      } else {
+        throw new Error('Something wrong');
+      }
+    })
+    .catch((err) => {
+      throw new Error(err);
+    });
 }
 
 // using async/await
@@ -48,7 +56,7 @@ function sendHttpRequest(method, url, data) {
 // }
 
 function fetchPosts() {
-  sendHttpRequest('GET', 'https://jsonplaceholder.typicode.com/posts')
+  sendHttpRequest('GET', 'https://jsonplaceholder.typicode.com/postss')
     .then((responseData) => {
       const listOfPosts = responseData;
       listEl.innerHTML = '';
