@@ -25,7 +25,7 @@ function sendHttpRequest(method, url, data) {
   return fetch(url, {
     method,
     //body: JSON.stringify(data),
-    body:data,
+    body:
     headers: { 'Contetent-Type': 'application/json' },
   })
     .then((response) => {
