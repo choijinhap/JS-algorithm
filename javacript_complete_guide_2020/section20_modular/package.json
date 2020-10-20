@@ -12,6 +12,7 @@
   "author": "choijinhap",
   "license": "ISC",
   "devDependencies": {
+    "clean-webpack-plugin": "^3.0.0",
     "eslint": "^7.11.0",
     "webpack": "^4.40.2",
     "webpack-cli": "^3.3.9",
