@@ -6,7 +6,7 @@ const user = {
   name: 'Max',
   age: 30,
 };
-
+//BROWSER STORAGE
 // storeBtn.addEventListener('click', () => {
 //   sessionStorage.setItem('uid', userId);
 //   localStorage.setItem('user', JSON.stringify(user));
@@ -23,16 +23,20 @@ const user = {
 //   }
 // });
 
-storeBtn.addEventListener('click', () => {
-  document.cookie = `uid=${userId}; max-age=5`;
-  document.cookie = `user=${JSON.stringify(user)}`;
-});
+// COOKIE
+// storeBtn.addEventListener('click', () => {
+//   document.cookie = `uid=${userId}; max-age=5`;
+//   document.cookie = `user=${JSON.stringify(user)}; expires=`;
+// });
 
-retrBtn.addEventListener('click', () => {
-  const cookieData = document.cookie;
-  const data = cookieData.split(';').map((i) => i.trim());
-  const userValue = data[1].split('=');
-  console.log(userValue);
-});
+// retrBtn.addEventListener('click', () => {
+//   const cookieData = document.cookie;
+//   const data = cookieData.split(';').map((i) => i.trim());
+//   const userValue = data[1].split('=');
+//   console.log(userValue);
+// });
 
-console.log(document.cookie);
+// console.log(document.cookie);
+
+const dbRequest = indexedDB.open('DummyDB', 1);
+
