@@ -1,8 +1,11 @@
+
 const btnEl = document.querySelector('button');
 const textEL = document.querySelector('p');
 btnEl.addEventListener('click', () => {
   const text = textEL.textContent;
   // fallback code (if-else statements)
+  const promise = new Promise();
+  console.log(promise);
   if (navigator.clipboard) {
     navigator.clipboard
       .writeText(text)
