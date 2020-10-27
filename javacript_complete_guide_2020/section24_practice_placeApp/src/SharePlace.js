@@ -1,20 +1,29 @@
 import { Modal } from './UI/Modal';
 import { Map } from './UI/Map';
-import { getCoordsFromAddress } from './Uitility/Location';
+import {
+  getCoordsFromAddress,
+  getAddressFromCoords,
+} from './Uitility/Location';
 class PlaceFinder {
   constructor() {
     const addressForm = document.querySelector('form');
     const locateUserBtn = document.getElementById('locate-btn');
-    console.log('a');
+    this.shareBtn = document.getElementById('share-btn');
+
     locateUserBtn.addEventListener('click', this.locateUserHandler.bind(this));
     addressForm.addEventListener('submit', this.findAddressHandler.bind(this));
   }
-  selectPlace(coordinates) {
+  selectPlace(coordinates, address) {
     if (this.map) {
       this.map.render(coordinates);
     } else {
       this.map = new Map(coordinates);
     }
+    const shareLink = document.getElementById('share-link');
+    shareLink.value = `${location.origin}/my-place?address=${encodeURI(
+      address
+    )}&lat=${coordinates.lat}&lng=${coordinates.lng}`;
+    this.shareBtn.disabled = false;
   }
   locateUserHandler() {
     if (!navigator.geolocation) {
@@ -29,13 +38,14 @@ class PlaceFinder {
     );
     modal.show();
     navigator.geolocation.getCurrentPosition(
-      (successResult) => {
+      async (successResult) => {
         modal.hide();
         const coordinates = {
           lat: successResult.coords.latitude,
           lng: successResult.coords.longitude,
         };
-        this.selectPlace(coordinates);
+        const address = await getAddressFromCoords(coordinates);
+        this.selectPlace(coordinates, address);
       },
       (error) => {
         modal.hide();
