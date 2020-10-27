@@ -11,6 +11,5 @@ export async function getCoordsFromAddress(address) {
   if (data.error_message) {
     throw new Error(data.error_message);
   }
-  console.log(data);
-  return data;
+  return data.results[0].geometry.location;
 }

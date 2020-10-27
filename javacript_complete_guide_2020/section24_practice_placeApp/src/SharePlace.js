@@ -45,17 +45,17 @@ class PlaceFinder {
       }
     );
   }
-  findAddressHandler(event) {
+  async findAddressHandler(event) {
     event.preventDefault();
     const address = event.target.querySelector('input').value;
-    console.log(address);
     if (!address || address.trim().length === 0) {
       alert('Invalid address entered - please try again!');
       return;
     }
     const modal = new Modal('loading-modal-content', 'wait');
     modal.show();
-    const coords = getCoordsFromAddress(address);
+    const coords = await getCoordsFromAddress(address);
+    this.selectPlace(coords);
     modal.hide();
     console.log(coords);
   }
