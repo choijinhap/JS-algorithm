@@ -11,18 +11,25 @@ export class Modal {
         this.modalTemplateEl.content,
         true
       );
-      const modalEl = modalElements.querySelector('.modal');
-      const backdropEl = modalElements.querySelector('.backdrop');
+      this.modalEl = modalElements.querySelector('.modal');
+      this.backdropEl = modalElements.querySelector('.backdrop');
       const contentEl = document.importNode(
         this.contentTemplateEl.content,
         true
       );
-      modalEl.appendChild(contentEl);
-      document.body.insertAdjacentElement('afterbegin', modalEl);
-      document.body.insertAdjacentElement('afterbegin', backdropEl);
+      this.modalEl.appendChild(contentEl);
+      document.body.insertAdjacentElement('afterbegin', this.modalEl);
+      document.body.insertAdjacentElement('afterbegin', this.backdropEl);
     } else {
       alert(this.fallbackText);
     }
   }
   hide() {
+    if (this.modalEl) {
+      document.body.removeChild(this.modalEl);
+      document.body.removeChild(this.backdropEl);
+      this.modalEl = null;
+      this.backdropEl = null;
+    }
+  }
 }

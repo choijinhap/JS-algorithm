@@ -30,7 +30,7 @@ class PlaceFinder {
         console.log(coordinates);
       },
       (error) => {
-          modal.hide();
+        modal.hide();
         alert(
           'Could not locate you unfortunately. Please enter an address manually'
         );
