@@ -1,4 +1,5 @@
 import { Modal } from './UI/Modal';
+import { Map } from './UI/Map';
 class PlaceFinder {
   constructor() {
     const addressForm = document.querySelector('form');
@@ -7,7 +8,13 @@ class PlaceFinder {
     locateUserBtn.addEventListener('click', this.locateUserHandler.bind(this));
     addressForm.addEventListener('submit', this.findAddressHandler.bind(this));
   }
-
+  selectPlace(coordinates) {
+    if (this.map) {
+      this.map.render(coordinates);
+    } else {
+      this.map = new Map(coordinates);
+    }
+  }
   locateUserHandler() {
     if (!navigator.geolocation) {
       alert(
@@ -22,12 +29,12 @@ class PlaceFinder {
     modal.show();
     navigator.geolocation.getCurrentPosition(
       (successResult) => {
+        modal.hide();
         const coordinates = {
           lat: successResult.coords.latitude,
           lng: successResult.coords.longitude,
         };
-        modal.hide();
-        console.log(coordinates);
+        this.selectPlace(coordinates);
       },
       (error) => {
         modal.hide();
